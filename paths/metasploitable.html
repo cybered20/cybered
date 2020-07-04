@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<title>CyberED</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+
+<style>
+  .zoom 
+  {
+  }
+
+  .zoom:hover {
+    transform: scale(1.10);
+  }
+
+</style>
+
+<body style="background-color: #161616">
+
+<!-- Navbar (sit on top) -->
+<div class="w3-top">
+  <div class="w3-bar w3-black w3-wide w3-padding w3-card">
+    <a href="https://cybered20.github.io/CyberED/" class="w3-bar-item w3-button w3-hover-black w3-hover-text-white w3-text-green">Cyber <b class="w3-text-white">ED</b></a>
+    <!-- Float links to the right. Hide them on small screens -->
+    <div class="w3-right">
+      <a href="https://cybered20.github.io/CyberED/#projects" class="w3-bar-item w3-button w3-hover-black w3-hover-text-green">Paths</a>
+      <a href="https://cybered20.github.io/CyberED/#about" class="w3-bar-item w3-button w3-hover-black w3-hover-text-green">About</a>
+    </div>
+  </div>
+</div>
+
+<!-- Page content -->
+<div class="w3-content w3-padding" style="max-width:1564px; margin-bottom: 200px">
+
+    <!-- About Section -->
+    <div class="w3-container w3-padding-32" id="about">
+        <h3 class="w3-border-bottom w3-border-dark-grey w3-padding-16 w3-text-light-grey">Hacking Metasploitable</h3>
+    </div>
+
+    <!-- Introduction -->
+    <div class="w3-container w3-padding">
+        <h4 class="w3-padding-16 w3-text-green">What is this learning path? What is metasploitable?</h4>
+        <p class="w3-text-light-grey">Metasploitable is a virtual machine (VM) sporting Linux as an OS. It's loaded with many vulnerabilities which could be found out in the wild. By experimenting with this VM one can learn about basic vulnerabilities all while getting to play with the metasploit framework, a tool used by many penetration testers / ethical hackers. </p>
+    </div>
+
+    <!-- Setting up the environment -->
+    <div class="w3-container w3-padding">
+        <h4 class="w3-padding-16 w3-text-green">How to set up the environment?</h4>
+        <p class="w3-text-light-grey">KALI - TODO</p>
+        <p class="w3-text-light-grey">VMWARE - TODO</p>
+        <p class="w3-text-light-grey">METASPLOITABLE - TODO</p>
+    </div>
+
+    <!-- List of ports to attack -->
+    <div class="w3-container w3-padding">
+        <h4 class="w3-padding-16 w3-text-green">Recon - Scanning the system</h4>
+        <p class="w3-text-light-grey">By running nmap on the system using this command: <code class="w3-codespan">nmap -T4 < IP of your VM ></code>. We get a list of open ports. All of these ports and their respecitve exploitation methods are describe below. Here's a screenshot of how things shouldd look like.</p>
+        <img src="../images/paths/metasploitable/nmap.png">
+        <p class="w3-text-light-grey">A lot of ports are open on the VM, let's go over them one by one.</p> 
+    </div>
+
+    <!-- Setting up the environment -->
+    <div class="w3-container w3-padding">
+        <h4 class="w3-padding-16 w3-text-green">Open ports</h4>
+        <a href="telnet.html" class="w3-hover-text-green"><p class="w3-text-light-grey w3-padding w3-hover-text-green">22/tcp - SSH</p></a>
+        <p class="w3-text-light-grey w3-padding">23/tcp - telnet</p>
+    </div>
+  
+    
+  
+
+      
+    
+
+<!-- End page content -->
+</div>
+
+<!-- Footer -->
+<footer class="w3-center w3-black w3-padding-16 w3-border-top w3-border-dark-gray w3-margin w3-border-light-grey">
+  <p>Powered by <a href="https://www.w3schools.com/w3css/default.asp" title="W3.CSS" target="_blank" class="w3-text-green w3-hover-text-green">w3.css</a></p>
+</footer>
+
+</body>
+</html>
+
