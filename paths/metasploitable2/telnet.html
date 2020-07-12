@@ -49,7 +49,7 @@
     <div class="w3-container w3-padding">
         <h4 class="w3-padding-16 w3-text-green">Connecting to the port</h4>
         <p class="w3-text-light-grey">However surprising it may be, connecting to a computer using telnet can be done by issuing the <code class="w3-codespan">telnet < IP address ></code> command in a terminal. Let's just do it and connect to our metasploitable instance. The response should be something like this.</p>
-        <img src="../images/paths/metasploitable/telnet/banner.png">
+        <img src="../../images/paths/metasploitable/telnet/banner.png">
         <p class="w3-text-light-grey">It is blatantly obvious that by using the credentials we just recieved, we can log in. Let's try it out. Issuing the <code class="w3-codespan">su</code> command will even let us act as root ... </p>
         <p>Now it's all good and well, I can hardly believe this is how the challenge should be solved. You won't learn anything from this and also, this isn't really realistic.</p>
     </div>
@@ -59,7 +59,7 @@
         <h4 class="w3-padding-16 w3-text-green">What you should learn from this</h4>
         <p class="w3-text-light-grey">While simply recieving a username and password in the banner isn't the most realistic thing, there's a hidden meaning to it. Let's fire up Wireshark and listen to our VMWARE connection. If you're not sure what interface to use, ping your VM and watch the litte icons of the interfaces. Whichever has traffic suddenly going on, that's the one you want to eavesdrop.</p>
         <p class="w3-text-light-grey">Connect to your VM and type in the credentials. Check your Wireshark and you should see that a lof of traffic was generated. Right click on any of the entries that has <code class="w3-codespan">Telnet data</code> in it, and select the <code class="w3-codespan">Follow TCP stream</code> option.</p>
-        <img src="../images/paths/metasploitable/telnet/followtcp.png">
+        <img src="../../images/paths/metasploitable/telnet/followtcp.png">
         <p class="w3-text-light-grey">What your're gonna see is the communication between your computer and the VM. Obviously you're gonna see that ugly prompt we recieved, with the credentials in it. That's unrealistic yes, but there's something else as well. The credentials you sent are also visible.<code class="w3-codespan">Telnet sends data in plain text</code> I believe this is the lesson you should learn, telnet communication can be captured and the attacker doesn't have to do anything. He just reads the credentials and can log in right away.</p>
     </div>
 
@@ -67,7 +67,7 @@
     <div class="w3-container w3-padding">
         <h4 class="w3-padding-16 w3-text-green">Scanning the port with metasploit</h4>
         <p class="w3-text-light-grey">Let's fire up metasploit using the <code class="w3-codespan">msfconsole</code> command. Issuing the <code class="w3-codespan">use auxiliary/scanner/telnet/telnet_login</code> command lets you bruteforce users of telnet. So let's set up the scanner, the parameters you need to set are <code class="w3-codespan">RHOSTS</code>, <code class="w3-codespan">USER_FILE</code> and <code class="w3-codespan">PASS_FILE</code> the first one is the IP of your VM, th other two are wordlists for the scanner to use. Two very basic wordlists can be found at <code class="w3-codespan">/usr/share/wordlists/metasploit</code> these are the <code class="w3-codespan">http_default_users.txt</code> and <code class="w3-codespan">http_default_pass.txt</code>. Finally, run the scanner with the <code class="w3-codespan">run</code> command. The following results should pop up somewhere.</p>
-        <img src="../images/paths/metasploitable/telnet/metasploitscan.png">
+        <img src="../../images/paths/metasploitable/telnet/metasploitscan.png">
         <p class="w3-text-light-grey">As you can see, the epidome of security, the credentials user:user can be used to log in.</p>
 
     </div>
@@ -77,7 +77,7 @@
         <h4 class="w3-padding-16 w3-text-green">Gaining root privileges</h4>
         <p class="w3-text-light-grey">To gain root privileges it's a good idea to test if our user has <code class="w3-codespan"></code> rights, so let's just run the <code class="w3-codespan">sudo -l</code> command. If we have sudo privileges we'll se what commands we're allowed to run.</p>
         <p class="w3-text-light-grey">Unfortunately, we're not sudoers. So let's look for a different method, running the <code class="w3-codespan">ls -la</code> command in <code class="w3-codespan">/usr/bin</code> will reveal a few binaries with the <code class="w3-codespan">setuid</code> flag. Lo and behold, quite a few of them have it. <code class="w3-codespan">Nmap</code> is one of them. Luckly for us, nmap has an interactive mode. Issue the <code class="w3-codespan">nmap --interactive</code> command. In this pseudo shell we can use <code class="w3-codespan">!</code> to run shell commands. Running <code class="w3-codespan">/bin/sh</code> finally gives us a root shell.</p>
-        <img src="../images/paths/metasploitable/telnet/rootshell.png">
+        <img src="../../images/paths/metasploitable/telnet/rootshell.png">
     </div>
     
     
@@ -86,7 +86,7 @@
 </div>
 
 <!-- Footer -->
-<footer class="w3-center w3-black w3-padding-16 w3-border-top w3-border-dark-gray w3-margin w3-border-light-grey">
+<footer class="w3-center w3-black w3-padding-16 w3-border-top w3-border-dark-gray w3-border-light-grey">
   <p>Powered by <a href="https://www.w3schools.com/w3css/default.asp" title="W3.CSS" target="_blank" class="w3-text-green w3-hover-text-green">w3.css</a></p>
 </footer>
 

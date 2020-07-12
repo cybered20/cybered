@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<title>CyberED</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+
+<style>
+  .zoom 
+  {
+  }
+
+  .zoom:hover {
+    transform: scale(1.10);
+  }
+
+</style>
+
+<body style="background-color: #161616">
+
+<!-- Navbar (sit on top) -->
+<div class="w3-top">
+  <div class="w3-bar w3-black w3-wide w3-padding w3-card">
+    <a href="https://cybered20.github.io/CyberED/" class="w3-bar-item w3-button w3-hover-black w3-hover-text-white w3-text-green">Cyber <b class="w3-text-white">ED</b></a>
+    <!-- Float links to the right. Hide them on small screens -->
+    <div class="w3-right">
+      <a href="https://cybered20.github.io/CyberED/#projects" class="w3-bar-item w3-button w3-hover-black w3-hover-text-green">Paths</a>
+      <a href="https://cybered20.github.io/CyberED/#about" class="w3-bar-item w3-button w3-hover-black w3-hover-text-green">About</a>
+    </div>
+  </div>
+</div>
+
+<!-- Page content -->
+<div class="w3-content w3-padding" style="max-width:1564px; margin-bottom: 200px">
+
+    <!-- About Section -->
+    <div class="w3-container w3-padding-32" id="about">
+        <h3 class="w3-border-bottom w3-border-dark-grey w3-padding-16 w3-text-light-grey">Privilege escalation, concepts and techniques</h3>
+    </div>
+
+    <!-- About Section -->
+    <div class="w3-container w3-padding" id="about">
+       <b><h4 class="w3-padding-16 w3-text-red">This path contains ideas and concepts related to privilege escalation, not a complete list of techniques or exploits, it only serves the purpose of teaching you how exploits usually work. Actual exploits can be found <a href="https://google.com">here</a></h4></b>
+    </div>
+
+    <!-- Introduction -->
+    <div class="w3-container w3-padding">
+        <h4 class="w3-padding-16 w3-text-green">What is 'privilege escalation' exactly?</h4>
+        <p class="w3-text-light-grey">Each and every operating system has some kind of access mechanism. Obiously, it's not a great idea to let your 5 year old daughter delete SYSTEM32 from your windows machine. To combat such events, every user is granted different privileges. These privileges include reading and writing files, executing programs and much more, but these are the most importatnt. Privilege escalation is the process of acquiring privileges you don't have, or only users from higher status have them (like an administrator). </p>
+        <p class="w3-text-light-grey">Some times your aim is to become an other user to get their privileges. This is called horizontal privilege escalation, you're not becoming a user with higher status, but simply another user who might have different privileges. If you're trying to get root privileges and become an administrator user, you're going for a vertical privilege escalation.</p>
+        <img src="../../images/paths/privescal/horizontalvertica.jpeg" alt="horizontalvertical">
+    </div>
+
+    <!-- List header -->
+    <div class="w3-container w3-padding">
+        <h4 class="w3-padding-16 w3-text-green">How do i achieve this?</h4>
+        <p class="w3-text-light-grey">Below you'll find a list of different techniques of privilege escalation. Read the list, try to understand and remember it and if you're in dire need of privilege escalation and you're lost or don't remember your options, return to this page and check the list.</p>
+    </div>
+
+    <!-- The list itself -->
+    <div class="w3-container w3-padding">
+        <h4 class="w3-padding-16 w3-text-green">List of concepts and techniques - WIP</h4>
+        <a href="setuid.html" class="w3-hover-text-green"><p class="w3-text-light-grey w3-padding w3-hover-text-green">SUID programs</p></a>
+    </div>
+  
+<!-- End page content -->
+</div>
+
+<!-- Footer -->
+<footer class="w3-center w3-black w3-padding-16 w3-border-top w3-border-dark-gray w3-border-light-grey">
+  <p>Powered by <a href="https://www.w3schools.com/w3css/default.asp" title="W3.CSS" target="_blank" class="w3-text-green w3-hover-text-green">w3.css</a></p>
+</footer>
+
+</body>
+</html>
+

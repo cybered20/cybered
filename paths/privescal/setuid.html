@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+<title>CyberED</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+
+<style>
+  .zoom 
+  {
+  }
+
+  .zoom:hover {
+    transform: scale(1.10);
+  }
+
+</style>
+
+<body style="background-color: #161616">
+
+<!-- Navbar (sit on top) -->
+<div class="w3-top">
+  <div class="w3-bar w3-black w3-wide w3-padding w3-card">
+    <a href="https://cybered20.github.io/CyberED/" class="w3-bar-item w3-button w3-hover-black w3-hover-text-white w3-text-green">Cyber <b class="w3-text-white">ED</b></a>
+    <!-- Float links to the right. Hide them on small screens -->
+    <div class="w3-right">
+      <a href="https://cybered20.github.io/CyberED/#projects" class="w3-bar-item w3-button w3-hover-black w3-hover-text-green">Paths</a>
+      <a href="https://cybered20.github.io/CyberED/#about" class="w3-bar-item w3-button w3-hover-black w3-hover-text-green">About</a>
+    </div>
+  </div>
+</div>
+
+<!-- Page content -->
+<div class="w3-content w3-padding" style="max-width:1564px; margin-bottom: 200px">
+
+    <!-- About Section -->
+    <div class="w3-container w3-padding-32" id="about">
+        <h3 class="w3-border-bottom w3-border-dark-grey w3-padding-16 w3-text-light-grey">Using SUID scripts for privilege escalation</h3>
+    </div>
+
+    <!-- Introduction -->
+    <div class="w3-container w3-padding">
+        <h4 class="w3-padding-16 w3-text-green">What is a SUID script?</h4>
+        <p class="w3-text-light-grey">Normally, UNIX scripts and programs run with the same permissions as the user
+            who executes them. This is why typical users can't change their passwords by editing the /etc/passwd file; they don't
+            have the permission to w rite to /etc/passwd, and no command they run will either. SUID programs, however, override
+            normal permissions and always run with the permissions of the program's owner. Therefore, users can use the /usr/bin
+            /passwd command to change their passwords. The /usr/bin/passwd command is SUID and is owned by root. It always
+            runs with the same permissions as root.</p>
+
+        <p class="w3-text-light-grey">The problems is that a lot of new users and sysadmins use SUID programs as a silver bullet to solve all of their problems and end up using it in an insecure way.</p>
+
+    </div>
+
+    <!-- Example program -->
+    <div class="w3-container w3-padding">
+        <h4 class="w3-padding-16 w3-text-green">Simple example (and method 1)</h4>
+        <p class="w3-text-light-grey">Take a look at this following little script.</p>
+        <img src="../../images/paths/privescal/setuidscript.png" alt="setuidscript">
+        <p class="w3-text-light-grey">This script is made for helpdesk employees, so that they can change someones password easily. It is however trivially easy to get a root shell with this. The script uses C-shell, which is vulnerable to environment variable manipulation. By issuing the <code class="w3-codespan">env TERM='`cp /bin/sh /tmp/sh;chown root /tmp/sh;chmod 4755/tmp/sh`' change-pass</code> command, you're greeted with a root shell.</p>
+        <p class="w3-text-light-grey">I'm gonna use this script to demonstrate different ways of explpoiting a SUID program.</p>
+    </div>
+
+    <!-- Method 2 -->
+    <div class="w3-container w3-padding">
+        <h4 class="w3-padding-16 w3-text-green">Method 2 - Abusing the PATH environment variable</h4>
+        <p class="w3-text-light-grey">If we would've used a different shell, the problem would be solved, but it's not safe yet. Unix systems sarch for executables in the paths found in the PATH environment variable. By setting PATH to a different value, and putting a binary with the same name as <code class="w3-codespan">passwd</code> we can run our own little script once the SUID script is ran.</p>
+        <img src="../../images/paths/privescal/pathmanipulation.png" alt="pathmanipulation">
+        <p class="w3-text-light-grey">Set the environment variable at the beginning of the script, so that this doesn't happen.</p>
+    </div>
+
+    <!-- Method 3 -->
+    <div class="w3-container w3-padding">
+        <h4 class="w3-padding-16 w3-text-green">Method 3 - Exploit stupid program design</h4>
+        <p class="w3-text-light-grey">The script works in a weird way, it actually lets you change the root password ... This is very important. A program might not have a an actual vulnerability, it might simply be made in a weird way. Never forget about non intended effects. Always understand and look up how a program works. Even if we make it more secure by checking the provided user name, if no argument is specified the passwd command is called without one and defaults to the root user, allowing us to change it's password once again.</p>
+        <img src="../../images/paths/privescal/argumentforgery.png" alt="argumentforgery">
+    </div>
+
+    <!-- Method 4 -->
+    <div class="w3-container w3-padding">
+        <h4 class="w3-padding-16 w3-text-green">Method 4 - Temporary files</h4>
+        <p class="w3-text-light-grey">The script is now pretty secure but here's a thing. It writes the username into a temporary file. The file's contents could be changed by the time the script checks its contents. Stop messing around with temporary files or at least place them in a location that isn't publicly readable.</p>
+        <img src="../../images/paths/privescal/semicolon.png" alt="semicolon">
+    </div>
+  
+    <!-- Method 5 -->
+    <div class="w3-container w3-padding">
+        <h4 class="w3-padding-16 w3-text-green">Method 5 - Command injection</h4>
+        <p class="w3-text-light-grey">There are more tricks up my sleeve. The argument and environment is pretty secure at this point. But we can still explpoit a command injection vulnerability. By calling the program with the <code class="w3-codespan">% change-pass "user;cp /bin/sh /tmp/sh;chown root /tmp/sh;chmod 4755 /tmp/sh"</code> command, we call the change-pass script with the user argument and inject a root shell calling sequence right after it.
+        </p>
+        <p class="w3-text-light-grey">NEVER TRUST USER INPUT! It is very important to always filter out input. Don't reinvent the wheel, look for someone who made a working filter and use his solution.</p>
+    </div>
+
+     <!-- Method 6 -->
+    <div class="w3-container w3-padding">
+        <h4 class="w3-padding-16 w3-text-green">Method 6 - IFS</h4>
+        <p class="w3-text-light-grey">The shell has a so called Internal Field Separator. The IFS specifies which characters separate commands. If we set the IFS to an empty space character, the command suddenly turns from <code class="w3-codespan">/usr/bin/passwd</code> to <code class="w3-codespan">usr bin passwd</code> And by creating a script called usr, the SUID scriptt will run it and open up a root shell.</p>
+        <p class="w3-text-light-grey">It's a good idea to set the IFS manually as well.</p>
+        <img src="../../images/paths/privescal/ifs.png" alt="ifs">
+    </div>
+
+
+    <!-- Method 7 -->
+    <div class="w3-container w3-padding">
+        <h4 class="w3-padding-16 w3-text-green">Method 7 - Linking</h4>
+        <p class="w3-text-light-grey">Unfortunately, we are still not safe. There is an inherent race condition in shell scripts that we can't fix with better
+            programming. The problem is that running a shell script is a two-step process. First, the system starts up a new shell.
+            Then, the new shell reads the contents of the script and executes it. By timing things perfectly, a hacker can exploit
+            the delay between shell startup and when the script is read and executed. By creating a link to the SUID script it is possible to run anything as root.</p>
+    </div>
+
+    <!-- References -->
+    <div class="w3-container w3-padding">
+        <h3 class="w3-text-red w3-padding">THE ONLY SOLUTION TO REMAIN SAFE IS NOT TO USE SUID SCRIPTS!!</h3>
+        <p class="w3-text-light-grey">I relied heavily on <a href="http://repository.root-me.org/Administration/Unix/EN%20-%20Dangers%20of%20SUID%20Shell%20Scripts.pdf">this</a> document to create this post. All credits go to it's creator, thank you! :) </main></p>
+    </div>
+
+<!-- End page content -->
+</div>
+
+<!-- Footer -->
+<footer class="w3-center w3-black w3-padding-16 w3-border-top w3-border-dark-gray w3-border-light-grey">
+  <p>Powered by <a href="https://www.w3schools.com/w3css/default.asp" title="W3.CSS" target="_blank" class="w3-text-green w3-hover-text-green">w3.css</a></p>
+</footer>
+
+</body>
+</html>
+
